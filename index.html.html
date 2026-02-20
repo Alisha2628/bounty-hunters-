@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELI5: The Simple-izer</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f9ff;
+            display: flex;
+            justify-content: center;
+            padding: 40px;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 100%;
+        }
+        h1 { color: #0284c7; text-align: center; }
+        p { color: #64748b; font-size: 0.9rem; }
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            box-sizing: border-box;
+            font-size: 16px;
+            margin-bottom: 20px;
+            outline: none;
+        }
+        textarea:focus { border-color: #38bdf8; }
+        button {
+            width: 100%;
+            background-color: #38bdf8;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover { background-color: #0284c7; }
+        #result {
+            margin-top: 25px;
+            padding: 20px;
+            background-color: #f8fafc;
+            border-left: 5px solid #38bdf8;
+            border-radius: 8px;
+            display: none;
+        }
+        .label { font-weight: bold; color: #0f172a; margin-bottom: 10px; display: block; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🚀 ELI5 Simple-izer</h1>
+    <p>Paste a big, confusing paragraph below and I'll make it easy!</p>
+    
+    <textarea id="inputText" placeholder="Paste your complex science or legal text here..."></textarea>
+    
+    <button onclick="simplifyText()">Make it Simple! ✨</button>
+
+    <div id="result">
+        <span class="label">In Kid Language:</span>
+        <div id="outputText"></div>
+    </div>
+</div>
+
+<script>
+    function simplifyText() {
+        let text = document.getElementById('inputText').value;
+        const resultDiv = document.getElementById('result');
+        const output = document.getElementById('outputText');
+
+        if (!text.trim()) {
+            alert("Please paste some text first!");
+            return;
+        }
+
+        // Logic: A simple dictionary to swap "Big Words" for "Kid Words"
+        // In a real AI app, this would call a model, but this local version 
+        // demonstrates the concept perfectly!
+        let simpleText = text
+            .replace(/mitochondria/gi, "the tiny batteries of a cell")
+            .replace(/litigation/gi, "a big argument in court")
+            .replace(/photosynthesis/gi, "how plants turn sunshine into snacks")
+            .replace(/jurisdiction/gi, "who is the boss of that area")
+            .replace(/subsequently/gi, "later on")
+            .replace(/utilize/gi, "use")
+            .replace(/acceleration/gi, "going faster")
+            .replace(/terminate/gi, "stop or end")
+            .replace(/pro bono/gi, "doing work for free to be nice");
+
+        // Add a "Kid-friendly" intro
+        output.innerHTML = "<b>So, basically...</b> " + simpleText;
+        resultDiv.style.display = 'block';
+    }
+</script>
+
+</body>
+</html>
