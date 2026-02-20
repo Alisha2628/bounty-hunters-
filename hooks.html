@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HOOK ENGINE // VIRAL ONLY</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;700&display=swap');
+        
+        body {
+            background: #000;
+            color: #fff;
+            font-family: 'Space Grotesk', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .main-wrapper {
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .header {
+            border-bottom: 4px solid #fff;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: -2px;
+            line-height: 0.9;
+        }
+
+        .input-area {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 40px;
+        }
+
+        input {
+            flex-grow: 1;
+            background: transparent;
+            border: 2px solid #333;
+            padding: 15px;
+            color: #fff;
+            font-family: inherit;
+            font-size: 1.2rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            border-color: #00ff6a;
+        }
+
+        button {
+            background: #fff;
+            color: #000;
+            border: none;
+            padding: 0 25px;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: #00ff6a;
+            transform: skewX(-5deg);
+        }
+
+        .result-box {
+            display: grid;
+            gap: 15px;
+        }
+
+        .hook-card {
+            background: #111;
+            padding: 20px;
+            border: 1px solid #222;
+            cursor: crosshair;
+            position: relative;
+            transition: all 0.2s;
+        }
+
+        .hook-card:hover {
+            background: #1a1a1a;
+            border-color: #fff;
+            transform: translateX(5px);
+        }
+
+        .hook-card::before {
+            content: 'COPY';
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.7rem;
+            color: #444;
+            opacity: 0;
+        }
+
+        .hook-card:hover::before {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-wrapper">
+    <div class="header">
+        <h1>HOOK<br>ENGINE.</h1>
+    </div>
+
+    <div class="input-area">
+        <input type="text" id="topic" placeholder="TYPE TOPIC..." autocomplete="off">
+        <button onclick="ignite()">FIRE</button>
+    </div>
+
+    <div id="results" class="result-box"></div>
+</div>
+
+<script>
+    function ignite() {
+        const t = document.getElementById('topic').value.toUpperCase();
+        if (!t) return;
+
+        const templates = [
+            `WHY I STOPPED DOING ${t}`,
+            `THE ${t} TRAP NO ONE SEES`,
+            `${t}: MY $10,000 MISTAKE`,
+            `THIS ${t} HACK IS BORDERLINE ILLEGAL`,
+            `THE END OF ${t} IS HERE`,
+            `STOP STUDYING ${t}. DO THIS.`,
+            `7 SICK ${t} SECRETS`,
+            `I REPLACED ${t} WITH THIS.`,
+            `THE BRUTAL TRUTH ABOUT ${t}`,
+            `STEAL MY ${t} WORKFLOW`
+        ];
+
+        const res = document.getElementById('results');
+        res.innerHTML = '';
+        
+        templates.forEach(h => {
+            const card = document.createElement('div');
+            card.className = 'hook-card';
+            card.innerText = h;
+            card.onclick = () => {
+                navigator.clipboard.writeText(h);
+                card.innerText = 'COPIED TO CLIPBOARD';
+                card.style.color = '#00ff6a';
+                setTimeout(() => { card.innerText = h; card.style.color = '#fff'; }, 1000);
+            };
+            res.appendChild(card);
+        });
+    }
+</script>
+
+</body>
+</html>
