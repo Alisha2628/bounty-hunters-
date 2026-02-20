@@ -3,105 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ELI5: The Simple-izer</title>
+    <title>Viral Title Gen</title>
     <style>
+        :root {
+            --bg: #0f172a;
+            --card: #1e293b;
+            --primary: #f472b6;
+            --secondary: #8b5cf6;
+            --text: #f8fafc;
+        }
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0f9ff;
+            font-family: 'Inter', system-ui, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
             display: flex;
             justify-content: center;
-            padding: 40px;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
         }
         .container {
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            max-width: 600px;
+            background: var(--card);
+            padding: 2rem;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
             width: 100%;
+            max-width: 500px;
+            text-align: center;
+            border: 1px solid #334155;
         }
-        h1 { color: #0284c7; text-align: center; }
-        p { color: #64748b; font-size: 0.9rem; }
-        textarea {
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        input {
             width: 100%;
-            height: 150px;
             padding: 15px;
-            border: 2px solid #e2e8f0;
+            margin: 20px 0;
             border-radius: 12px;
-            box-sizing: border-box;
+            border: 2px solid #334155;
+            background: #0f172a;
+            color: white;
             font-size: 16px;
-            margin-bottom: 20px;
+            box-sizing: border-box;
             outline: none;
+            transition: border 0.3s;
         }
-        textarea:focus { border-color: #38bdf8; }
+        input:focus { border-color: var(--primary); }
         button {
             width: 100%;
-            background-color: #38bdf8;
-            color: white;
-            border: none;
             padding: 15px;
             border-radius: 12px;
-            font-size: 18px;
+            border: none;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            color: white;
             font-weight: bold;
+            font-size: 16px;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: transform 0.2s, opacity 0.2s;
         }
-        button:hover { background-color: #0284c7; }
-        #result {
+        button:hover { transform: scale(1.02); opacity: 0.9; }
+        .results-list {
             margin-top: 25px;
-            padding: 20px;
-            background-color: #f8fafc;
-            border-left: 5px solid #38bdf8;
-            border-radius: 8px;
+            text-align: left;
             display: none;
         }
-        .label { font-weight: bold; color: #0f172a; margin-bottom: 10px; display: block; }
+        .title-card {
+            background: #334155;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            border-left: 4px solid var(--primary);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .title-card:hover { background: #475569; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>🚀 ELI5 Simple-izer</h1>
-    <p>Paste a big, confusing paragraph below and I'll make it easy!</p>
+    <h1>🚀 Headline Gen</h1>
+    <p style="color: #94a3b8;">Turn boring topics into viral gold.</p>
     
-    <textarea id="inputText" placeholder="Paste your complex science or legal text here..."></textarea>
-    
-    <button onclick="simplifyText()">Make it Simple! ✨</button>
+    <input type="text" id="topicInput" placeholder="Enter topic (e.g. Cooking, AI, Fitness)">
+    <button onclick="generateHeadlines()">Generate 10 Headlines ✨</button>
 
-    <div id="result">
-        <span class="label">In Kid Language:</span>
-        <div id="outputText"></div>
+    <div id="results" class="results-list">
+        <p style="font-weight: bold; color: var(--primary);">Click to copy:</p>
+        <div id="listContainer"></div>
     </div>
 </div>
 
 <script>
-    function simplifyText() {
-        let text = document.getElementById('inputText').value;
-        const resultDiv = document.getElementById('result');
-        const output = document.getElementById('outputText');
+    function generateHeadlines() {
+        const topic = document.getElementById('topicInput').value.trim();
+        if (!topic) { alert("Please enter a topic!"); return; }
 
-        if (!text.trim()) {
-            alert("Please paste some text first!");
-            return;
-        }
+        const templates = [
+            `Why Everything You Know About ${topic} is Wrong`,
+            `10 ${topic} Secrets the Experts Don't Want You to Know`,
+            `How to Master ${topic} in Just 5 Minutes a Day`,
+            `The Ultimate Guide to ${topic}: Stop Making These Mistakes`,
+            `I Tried ${topic} for 30 Days and This Happened...`,
+            `${topic} is Dead. Here's What's Next.`,
+            `7 Shocking Reasons Why ${topic} is Your Secret Weapon`,
+            `From Zero to Pro: The Lazy Person's Way to ${topic}`,
+            `Is ${topic} Actually Worth It? (Honest Review)`,
+            `Stop Ignoring ${topic}! You'll Thank Me Later.`
+        ];
 
-        // Logic: A simple dictionary to swap "Big Words" for "Kid Words"
-        // In a real AI app, this would call a model, but this local version 
-        // demonstrates the concept perfectly!
-        let simpleText = text
-            .replace(/mitochondria/gi, "the tiny batteries of a cell")
-            .replace(/litigation/gi, "a big argument in court")
-            .replace(/photosynthesis/gi, "how plants turn sunshine into snacks")
-            .replace(/jurisdiction/gi, "who is the boss of that area")
-            .replace(/subsequently/gi, "later on")
-            .replace(/utilize/gi, "use")
-            .replace(/acceleration/gi, "going faster")
-            .replace(/terminate/gi, "stop or end")
-            .replace(/pro bono/gi, "doing work for free to be nice");
+        const container = document.getElementById('listContainer');
+        const resultsDiv = document.getElementById('results');
+        container.innerHTML = '';
 
-        // Add a "Kid-friendly" intro
-        output.innerHTML = "<b>So, basically...</b> " + simpleText;
-        resultDiv.style.display = 'block';
+        templates.forEach(t => {
+            const div = document.createElement('div');
+            div.className = 'title-card';
+            div.innerText = t;
+            div.onclick = () => {
+                navigator.clipboard.writeText(t);
+                alert("Copied to clipboard!");
+            };
+            container.appendChild(div);
+        });
+
+        resultsDiv.style.display = 'block';
     }
 </script>
 
