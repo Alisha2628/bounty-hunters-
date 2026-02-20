@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Style Palette // Virtual Stylist</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap');
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #1a1a1a;
+            color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            overflow: hidden; /* Prevent scrollbar from animation */
+        }
+
+        .stylist-app {
+            background: #282828;
+            border-radius: 25px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            padding: 40px;
+            width: 100%;
+            max-width: 800px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            position: relative;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+            background: linear-gradient(45deg, #ff007f, #00ffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        p {
+            color: #a0a0a0;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        select {
+            width: 100%;
+            padding: 15px;
+            background: #3a3a3a;
+            border: 1px solid #4a4a4a;
+            border-radius: 10px;
+            color: #e0e0e0;
+            font-size: 1em;
+            appearance: none; /* Remove default arrow */
+            -webkit-appearance: none;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+        select:hover { border-color: #ff007f; }
+
+        button {
+            grid-column: span 2; /* Make button span both columns */
+            padding: 18px;
+            background: linear-gradient(90deg, #ff007f, #00ffff);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1.1em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 255, 255, 0.3);
+        }
+
+        #mood-board {
+            display: none;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            animation: fadeIn 1s ease-out forwards;
+            padding-top: 20px;
+            border-top: 1px solid #3a3a3a;
+        }
+
+        .outfit-item {
+            background: #333;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            transform: scale(0.95);
+            opacity: 0;
+            animation: itemFadeIn 0.8s forwards;
+            animation-delay: var(--delay);
+        }
+
+        .outfit-item img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .item-label {
+            padding: 12px;
+            background: #444;
+            color: #e0e0e0;
+            font-size: 0.85em;
+            font-weight: 400;
+            text-align: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes itemFadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="stylist-app">
+    <div class="header">
+        <h1>Style Palette</h1>
+        <p>Your AI-Powered Virtual Stylist</p>
+    </div>
+
+    <div class="controls">
+        <select id="occasion">
+            <option value="job_interview">💼 Job Interview</option>
+            <option value="casual_brunch">☕ Casual Brunch</option>
+            <option value="evening_date">🥂 Evening Date</option>
+            <option value="formal_event">🎩 Formal Event</option>
+            <option value="gym_workout">🏋️ Gym Workout</option>
+        </select>
+
+        <select id="weather">
+            <option value="sunny">☀️ Sunny</option>
+            <option value="rainy">🌧️ Rainy</option>
+            <option value="cold">❄️ Cold</option>
+            <option value="warm">🌡️ Warm</option>
+        </select>
+
+        <button onclick="generateOutfit()">Curate My Look ✨</button>
+    </div>
+
+    <div id="mood-board">
+        </div>
+</div>
+
+<script>
+    function generateOutfit() {
+        const occasion = document.getElementById('occasion').value;
+        const weather = document.getElementById('weather').value;
+        const moodBoard = document.getElementById('mood-board');
+        moodBoard.innerHTML = ''; // Clear previous results
+        moodBoard.style.display = 'grid';
+
+        // --- Outfit Logic (Simplified for HTML Demo) ---
+        // In a real app, this would be complex AI logic generating image URLs
+        // For this demo, we use placeholder images and labels based on selections
+
+        let outfit = [];
+
+        if (occasion === "job_interview") {
+            outfit = [
+                { label: "Classic Blazer", img: "https://via.placeholder.com/300x180/2f3a47/ffffff?text=Blazer" },
+                { label: "Tailored Trousers", img: "https://via.placeholder.com/300x180/3c4755/ffffff?text=Trousers" },
+                { label: "Crisp Shirt", img: "https://via.placeholder.com/300x180/4f5b6b/ffffff?text=Shirt" },
+                { label: "Leather Loafers", img: "https://via.placeholder.com/300x180/5d6b7c/ffffff?text=Shoes" }
+            ];
+            if (weather === "rainy") {
+                outfit.push({ label: "Trench Coat", img: "https://via.placeholder.com/300x180/6e7c8d/ffffff?text=Trench+Coat" });
+                outfit.push({ label: "Waterproof Watch", img: "https://via.placeholder.com/300x180/7e8c9d/ffffff?text=Watch" });
+            }
+        } else if (occasion === "casual_brunch") {
+            outfit = [
+                { label: "Denim Jacket", img: "https://via.placeholder.com/300x180/3b5998/ffffff?text=Denim+Jacket" },
+                { label: "Flowy Dress", img: "https://via.placeholder.com/300x180/4c6aa3/ffffff?text=Dress" },
+                { label: "White Sneakers", img: "https://via.placeholder.com/300x180/5d7bb0/ffffff?text=Sneakers" },
+                { label: "Crossbody Bag", img: "https://via.placeholder.com/300x180/6e8cc0/ffffff?text=Bag" }
+            ];
+            if (weather === "cold") {
+                outfit.push({ label: "Chunky Knit Scarf", img: "https://via.placeholder.com/300x180/7faad0/ffffff?text=Scarf" });
+            }
+        }
+        // ... more conditions for other occasions/weather
+
+        // Add a fallback if no specific outfit is found for the combination
+        if (outfit.length === 0) {
+             outfit = [
+                { label: "Basic Tee", img: "https://via.placeholder.com/300x180/555/ffffff?text=T-Shirt" },
+                { label: "Comfortable Jeans", img: "https://via.placeholder.com/300x180/666/ffffff?text=Jeans" },
+                { label: "Casual Shoes", img: "https://via.placeholder.com/300x180/777/ffffff?text=Shoes" },
+                { label: "Simple Accessory", img: "https://via.placeholder.com/300x180/888/ffffff?text=Accessory" }
+            ];
+            console.warn("No specific outfit found for this combination. Displaying general items.");
+        }
+
+
+        // Render items with a staggered animation
+        outfit.forEach((item, index) => {
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'outfit-item';
+            itemDiv.style.setProperty('--delay', `${index * 0.15}s`); // Staggered delay
+            itemDiv.innerHTML = `
+                <img src="${item.img}" alt="${item.label}">
+                <div class="item-label">${item.label}</div>
+            `;
+            moodBoard.appendChild(itemDiv);
+        });
+    }
+</script>
+
+</body>
+</html>
