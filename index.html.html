@@ -2,137 +2,50 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Viral Title Gen</title>
+    <title>Lo-Fi Prompt Gen</title>
     <style>
-        :root {
-            --bg: #0f172a;
-            --card: #1e293b;
-            --primary: #f472b6;
-            --secondary: #8b5cf6;
-            --text: #f8fafc;
-        }
-        body {
-            font-family: 'Inter', system-ui, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-        }
-        .container {
-            background: var(--card);
-            padding: 2rem;
-            border-radius: 24px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-            width: 100%;
-            max-width: 500px;
-            text-align: center;
-            border: 1px solid #334155;
-        }
-        h1 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        input {
-            width: 100%;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 12px;
-            border: 2px solid #334155;
-            background: #0f172a;
-            color: white;
-            font-size: 16px;
-            box-sizing: border-box;
-            outline: none;
-            transition: border 0.3s;
-        }
-        input:focus { border-color: var(--primary); }
-        button {
-            width: 100%;
-            padding: 15px;
-            border-radius: 12px;
-            border: none;
-            background: linear-gradient(135deg, var(--secondary), var(--primary));
-            color: white;
-            font-weight: bold;
-            font-size: 16px;
-            cursor: pointer;
-            transition: transform 0.2s, opacity 0.2s;
-        }
-        button:hover { transform: scale(1.02); opacity: 0.9; }
-        .results-list {
-            margin-top: 25px;
-            text-align: left;
-            display: none;
-        }
-        .title-card {
-            background: #334155;
-            padding: 12px 15px;
-            margin-bottom: 10px;
-            border-radius: 8px;
-            font-size: 14px;
-            border-left: 4px solid var(--primary);
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .title-card:hover { background: #475569; }
+        body { font-family: 'Courier New', Courier, monospace; background: #2d233c; color: #e0c3fc; display: flex; justify-content: center; padding: 50px; }
+        .card { background: #3d3153; padding: 30px; border-radius: 15px; border: 2px solid #5e4b8d; width: 400px; box-shadow: 10px 10px 0px #1a1425; }
+        select, button { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: none; font-size: 16px; }
+        select { background: #1a1425; color: #e0c3fc; cursor: pointer; }
+        button { background: #ff79c6; color: #fff; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        button:hover { background: #bd93f9; transform: translateY(-2px); }
+        #output { margin-top: 20px; background: #1a1425; padding: 15px; border-radius: 8px; font-size: 14px; line-height: 1.5; border: 1px dashed #ff79c6; display: none; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>🚀 Headline Gen</h1>
-    <p style="color: #94a3b8;">Turn boring topics into viral gold.</p>
+<div class="card">
+    <h2 style="margin-top:0; text-align: center;">☕ Lo-Fi Architect</h2>
     
-    <input type="text" id="topicInput" placeholder="Enter topic (e.g. Cooking, AI, Fitness)">
-    <button onclick="generateHeadlines()">Generate 10 Headlines ✨</button>
+    <label>Choose Weather:</label>
+    <select id="weather">
+        <option value="rainy window, distant thunder, water droplets">🌧️ Heavy Rain</option>
+        <option value="warm sunlight, chirping birds, light breeze">☀️ Sunny Morning</option>
+        <option value="snow falling, muffled silence, icy wind">❄️ Snowy Night</option>
+    </select>
 
-    <div id="results" class="results-list">
-        <p style="font-weight: bold; color: var(--primary);">Click to copy:</p>
-        <div id="listContainer"></div>
-    </div>
+    <label>Choose Mood:</label>
+    <select id="mood">
+        <option value="melancholic, nostalgic, dusty vinyl crackle">☁️ Sad & Dreamy</option>
+        <option value="productive, steady, rhythmic, focused">📚 Deep Focus</option>
+        <option value="chill, jazzy, smooth Rhodes piano, relaxed">🍹 Lazy Sunday</option>
+    </select>
+
+    <button onclick="generatePrompt()">Generate Prompt ✨</button>
+
+    <div id="output"></div>
 </div>
 
 <script>
-    function generateHeadlines() {
-        const topic = document.getElementById('topicInput').value.trim();
-        if (!topic) { alert("Please enter a topic!"); return; }
-
-        const templates = [
-            `Why Everything You Know About ${topic} is Wrong`,
-            `10 ${topic} Secrets the Experts Don't Want You to Know`,
-            `How to Master ${topic} in Just 5 Minutes a Day`,
-            `The Ultimate Guide to ${topic}: Stop Making These Mistakes`,
-            `I Tried ${topic} for 30 Days and This Happened...`,
-            `${topic} is Dead. Here's What's Next.`,
-            `7 Shocking Reasons Why ${topic} is Your Secret Weapon`,
-            `From Zero to Pro: The Lazy Person's Way to ${topic}`,
-            `Is ${topic} Actually Worth It? (Honest Review)`,
-            `Stop Ignoring ${topic}! You'll Thank Me Later.`
-        ];
-
-        const container = document.getElementById('listContainer');
-        const resultsDiv = document.getElementById('results');
-        container.innerHTML = '';
-
-        templates.forEach(t => {
-            const div = document.createElement('div');
-            div.className = 'title-card';
-            div.innerText = t;
-            div.onclick = () => {
-                navigator.clipboard.writeText(t);
-                alert("Copied to clipboard!");
-            };
-            container.appendChild(div);
-        });
-
-        resultsDiv.style.display = 'block';
+    function generatePrompt() {
+        const weather = document.getElementById('weather').value;
+        const mood = document.getElementById('mood').value;
+        const prompt = `Lo-fi hip hop study beat, 85-90 BPM, ${mood}, ambient background sounds of ${weather}. Features soft boom-bap drums, muffled bassline, and high-quality aesthetic textures. No vocals, instrumental only.`;
+        
+        const out = document.getElementById('output');
+        out.style.display = 'block';
+        out.innerHTML = `<strong>Your Prompt:</strong><br>${prompt}`;
     }
 </script>
 
